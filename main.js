@@ -19,9 +19,9 @@ async function getResponse() {
   return data.results;
 }
 
-let char1 = document.getElementById("char1");
+let charSelector1 = document.getElementById("char1");
 
-let char2 = document.getElementById("char2");
+let charSelector2 = document.getElementById("char2");
 
 async function getCharacter(id) {
   const response = await fetch(`https://swapi.dev/api/people/${id}`, {
@@ -37,11 +37,11 @@ getResponse().then((response) => {
     const opt1 = document.createElement("option");
     opt1.value = id;
     opt1.innerText = char.name;
-    char1.append(opt1);
+    charSelector1.append(opt1);
     const opt2 = document.createElement("option");
     opt2.value = id;
     opt2.innerText = char.name;
-    char2.append(opt2);
+    charSelector2.append(opt2);
     id++;
   });
 });
@@ -49,48 +49,75 @@ getResponse().then((response) => {
 // function when you click the button
 function clickBtn() {
   const attributes = [
-    "name",
-    "gender",
-    "mass",
-    "height",
-    "hairColor",
-    "skinColor",
-    "eyeColor",
-    "numFilms",
+    { name: "name", compare: false },
+    { name: "gender", compare: true, compEqual: true },
+    { name: "mass", compare: true },
+    { name: "height", compare: true },
+    { name: "hairColor", compare: true, compEqual: true },
+    { name: "skinColor", compare: true, compEqual: true },
+    { name: "eyeColor", compare: false },
+    { name: "numFilms", compare: true }
   ];
+  let row1 = document.getElementById("char1Row");
+  let row2 = document.getElementById("char2Row");
   //character id, compare
   const opt1 = document.getElementById("char1");
-  let char1 = null;
-  getCharacter(opt1.value).then((response) => {
-    char1 = new Character(response);
-
-    console.log(char1);
-    let row = document.getElementById("char1Row");
-
-    for (var i = 0; i < attributes.length; i++) {
-      row.children[i].innerHTML = char1[attributes[i]];
-    }
-  });
-
   const opt2 = document.getElementById("char2");
-  let char2 = null;
-  getCharacter(opt2.value).then((response) => {
-    char2 = new Character(response);
-
-    console.log(char2);
-    let row = document.getElementById("char2Row");
-
+  row1.children[8].innerHTML = `<img src="images/${opt1.value}.jpeg"/>`;
+  row2.children[8].innerHTML = `<img src="images/${opt2.value}.jpeg"/>`;
+  getCharacter(opt1.value).then((response1) => {
+    char1 = new Character(response1);
     for (var i = 0; i < attributes.length; i++) {
-      row.children[i].innerHTML = char2[attributes[i]];
+      row1.children[i].innerHTML = char1[attributes[i].name];
     }
+    getCharacter(opt2.value).then((response2) => {
+      char2 = new Character(response2);
+      for (var i = 0; i < attributes.length; i++) {
+        row2.children[i].innerHTML = char2[attributes[i].name];
+      }
+      for (var i = 0; i < attributes.length; i++) {
+        if (attributes[i].compare) {
+          console.log(char1);
+          console.log(char2);
+
+          if (
+            parseInt(char1[attributes[i].name]) >
+            parseInt(char2[attributes[i].name])
+          ) {
+            row1.children[i].classList.add("bigger");
+          } else if (
+            parseInt(char1[attributes[i].name]) <
+            parseInt(char2[attributes[i].name])
+          ) {
+            row2.children[i].classList.add("bigger");
+          }
+          else {
+            
+          }
+        }
+        if (attributes[i].compEqual) {
+          console.log(char1[attributes[i].name]);
+          console.log(char2[attributes[i].name]);
+          if (char1[attributes[i].name] === char2[attributes[i].name]) {
+            row1.children[i].classList.add("equal");
+            row2.children[i].classList.add("equal");
+          }
+          else {
+            row1.children[i].classList.remove("equal");
+            row2.children[i].classList.remove("equal");
+          }
+
+        }
+      }
+    });
   });
 
-  //document.getElementById("nameRow").children[1].text = char1.name;
-}
+  //if element has class bigger, highlight somehow
 
-// 7 rader med första karaktärens hårfärg osv o andra karaktärens attribut
-// under själva select, när man tryck på compare
-//
+  //char1 char2
+  //loopa igenom allt jag ska jämföra
+  // char1 eller 2 har största attribut, markera bold eller ngt, class bigger
+}
 
 /* 
 if else sats för vilken bild karaktären ska ha? 
@@ -118,4 +145,7 @@ if char1 === char2
 alert same character
 
 if char1 
+
+
+spara bilder o döp till karaktärs id
 */

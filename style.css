@@ -1,0 +1,35 @@
+.bigger {
+    color: turquoise;
+}
+
+.equal {
+    color: green;
+}
+
+.notequal {
+    color: red;
+}
+
+* {
+    font-family: 'Courier New', Courier, monospace;
+    color: white;
+    background-color: black;
+}
+
+img {
+    width: 150px;
+    height: 150px;
+}
+
+
+table {
+    padding: 4px;
+}
+
+th {
+    padding: 20px;
+}
+
+td {
+    padding: 20px;
+}
