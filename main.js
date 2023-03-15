@@ -77,22 +77,22 @@ function clickBtn() {
       }
       for (var i = 0; i < attributes.length; i++) {
         if (attributes[i].compare) {
-          console.log(char1);
-          console.log(char2);
-
           if (
             parseInt(char1[attributes[i].name]) >
             parseInt(char2[attributes[i].name])
           ) {
             row1.children[i].classList.add("bigger");
+            row2.children[i].classList.remove("bigger");
           } else if (
             parseInt(char1[attributes[i].name]) <
             parseInt(char2[attributes[i].name])
           ) {
             row2.children[i].classList.add("bigger");
+            row1.children[i].classList.remove("bigger");
           }
           else {
-            
+            row1.children[i].classList.remove("bigger");
+            row2.children[i].classList.remove("bigger");
           }
         }
         if (attributes[i].compEqual) {
