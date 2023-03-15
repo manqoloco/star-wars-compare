@@ -1,3 +1,5 @@
+// lagrar info för karaktärer från apiet
+
 class Character {
   constructor(obj) {
     this.name = obj.name;
@@ -23,6 +25,8 @@ let charSelector1 = document.getElementById("char1");
 
 let charSelector2 = document.getElementById("char2");
 
+// ha id på varje rad i selektorn, det idt för att söka mer info om vad jag valt
+
 async function getCharacter(id) {
   const response = await fetch(`https://swapi.dev/api/people/${id}`, {
     method: "GET",
@@ -30,6 +34,8 @@ async function getCharacter(id) {
   const data = await response.json(); // Extracting data as a JSON Object from the response
   return data;
 }
+
+// dropdown 
 
 getResponse().then((response) => {
   let id = 1;
@@ -60,11 +66,17 @@ function clickBtn() {
   ];
   let row1 = document.getElementById("char1Row");
   let row2 = document.getElementById("char2Row");
-  //character id, compare
+
+  //character id, compare, hämta ut data på vad jag har valt
   const opt1 = document.getElementById("char1");
   const opt2 = document.getElementById("char2");
+
+  // tr's children (td)
   row1.children[8].innerHTML = `<img src="images/${opt1.value}.jpeg"/>`;
   row2.children[8].innerHTML = `<img src="images/${opt2.value}.jpeg"/>`;
+
+  // skapar upp karaktär baserat på responsen, opt.val vilket karaktärl
+
   getCharacter(opt1.value).then((response1) => {
     char1 = new Character(response1);
     for (var i = 0; i < attributes.length; i++) {
@@ -95,6 +107,7 @@ function clickBtn() {
             row2.children[i].classList.remove("bigger");
           }
         }
+        // kollar även de med compEqual
         if (attributes[i].compEqual) {
           console.log(char1[attributes[i].name]);
           console.log(char2[attributes[i].name]);
@@ -111,41 +124,5 @@ function clickBtn() {
       }
     });
   });
-
-  //if element has class bigger, highlight somehow
-
-  //char1 char2
-  //loopa igenom allt jag ska jämföra
-  // char1 eller 2 har största attribut, markera bold eller ngt, class bigger
 }
 
-/* 
-if else sats för vilken bild karaktären ska ha? 
-lägg till en bild till karaktären
-
-if char1 = 
-
-
-picture urls
-luke: https://cdn.vox-cdn.com/thumbor/gwoIXENtTU3yoKdaaymm_rTFfrY=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/22182522/luke_jabbas_palace.jpg
-darth vader: https://static.feber.se/article_images/50/48/66/504866.jpg
-r2d2: https://www.heromic.se/products/1159/115976/6273acd22e90e.jpg
-leia: https://upload.wikimedia.org/wikipedia/en/thumb/1/1b/Princess_Leia%27s_characteristic_hairstyle.jpg/220px-Princess_Leia%27s_characteristic_hairstyle.jpg
-c3po: https://www.sideshow.com/cdn-cgi/image/quality=90,f=auto/https://www.sideshow.com/storage/product-images/400372/c-3po_star-wars_gallery_62881a106218c.jpg
-beru whitesun lars: https://static.wikia.nocookie.net/shaniverse/images/d/df/Beru.jpg/revision/latest?cb=20200819151847
-owen lars: https://static.wikia.nocookie.net/starwars/images/e/eb/OwenCardTrader.png/revision/latest?cb=20171108050140
-r5-d4: https://static.wikia.nocookie.net/starwars/images/2/2c/R5d4.jpg/revision/latest?cb=20080404200713
-biggs darklighter: https://static.wikia.nocookie.net/swfanon/images/5/57/BiggsDarklighter.jpg/revision/latest?cb=20120324222406
-obiwan kenobi: https://lumiere-a.akamaihd.net/v1/images/628cdaa1dbbde50001de0bd3-image_6c311046.jpeg?region=0,0,1536,864
-
-
-compare characters? 
-
-if char1 === char2 
-alert same character
-
-if char1 
-
-
-spara bilder o döp till karaktärs id
-*/
