@@ -25,7 +25,7 @@ let charSelector1 = document.getElementById("char1");
 
 let charSelector2 = document.getElementById("char2");
 
-// ha id på varje rad i selektorn, det idt för att söka mer info om vad jag valt
+//id on every row in the selector, use id to search more info about option
 
 async function getCharacter(id) {
   const response = await fetch(`https://swapi.dev/api/people/${id}`, {
@@ -53,6 +53,7 @@ getResponse().then((response) => {
 });
 
 // function when you click the button
+
 function clickBtn() {
   const attributes = [
     { name: "name", compare: false },
@@ -67,7 +68,7 @@ function clickBtn() {
   let row1 = document.getElementById("char1Row");
   let row2 = document.getElementById("char2Row");
 
-  //character id, compare, hämta ut data på vad jag har valt
+  //character id, compare, fetch data i chose
   const opt1 = document.getElementById("char1");
   const opt2 = document.getElementById("char2");
 
@@ -75,7 +76,7 @@ function clickBtn() {
   row1.children[8].innerHTML = `<img src="images/${opt1.value}.jpeg"/>`;
   row2.children[8].innerHTML = `<img src="images/${opt2.value}.jpeg"/>`;
 
-  // skapar upp karaktär baserat på responsen, opt.val vilket karaktärl
+  // creates characters based on response, opt.value what character
 
   getCharacter(opt1.value).then((response1) => {
     char1 = new Character(response1);
@@ -107,7 +108,7 @@ function clickBtn() {
             row2.children[i].classList.remove("bigger");
           }
         }
-        // kollar även de med compEqual
+        // checks if they're equal with compEqual
         if (attributes[i].compEqual) {
           console.log(char1[attributes[i].name]);
           console.log(char2[attributes[i].name]);
